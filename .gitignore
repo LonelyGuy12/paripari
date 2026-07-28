@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+*.egg-info/
+
+# Env files (contain API keys — never commit!)
+.env
+backend/.env
+
+# Caches / indexes (generated at runtime)
+backend/cache/
+
+# Node
+node_modules/
+.next/
+*.log
+
+# OS
+.DS_Store
