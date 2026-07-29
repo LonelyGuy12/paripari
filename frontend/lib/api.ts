@@ -2,7 +2,13 @@
  * lib/api.ts — Backend client utilities
  */
 
-const BACKEND = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
+const getBackendUrl = () => {
+  if (process.env.NEXT_PUBLIC_BACKEND_URL) return process.env.NEXT_PUBLIC_BACKEND_URL;
+  if (typeof window !== "undefined" && window.location.port === "3001") return "http://localhost:8000";
+  if (typeof window !== "undefined" && window.location.port === "3000") return "http://localhost:8000";
+  return "";
+};
+const BACKEND = getBackendUrl();
 
 export interface ChatRequest {
   repo_url: string;

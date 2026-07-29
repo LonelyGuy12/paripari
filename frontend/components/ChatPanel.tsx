@@ -8,7 +8,13 @@ import { CodeViewer } from "./CodeViewer";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, Terminal, Loader2, Bot, User, Code2, Link as LinkIcon, Database, CheckCircle2 } from "lucide-react";
 
-const BACKEND = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
+const getBackendUrl = () => {
+  if (process.env.NEXT_PUBLIC_BACKEND_URL) return process.env.NEXT_PUBLIC_BACKEND_URL;
+  if (typeof window !== "undefined" && window.location.port === "3001") return "http://localhost:8000";
+  if (typeof window !== "undefined" && window.location.port === "3000") return "http://localhost:8000";
+  return "";
+};
+const BACKEND = getBackendUrl();
 
 const TOOL_LABELS: Record<string, string> = {
   list_directory: "Listing directory",
