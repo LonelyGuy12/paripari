@@ -16,7 +16,8 @@ load_dotenv()  # Must run BEFORE project imports so env vars are available at im
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import StreamingResponse
+from fastapi.responses import StreamingResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from agent import run_agent
@@ -172,3 +173,19 @@ async def telemetry():
       }
     """
     return await fetch_telemetry(paritok_url=PARITOK_URL, mock_mode=MOCK_MODE)
+
+# ── Static Frontend ───────────────────────────────────────────────────────────
+STATIC_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../frontend/out")
+
+from fastapi.responses import JSONResponse
+
+@app.exception_handler(404)
+async def custom_404_handler(request, exc):
+    """Fallback to index.html for client-side routing if the file isn't found."""
+    index_path = os.path.join(STATIC_DIR, "index.html")
+    if os.path.exists(index_path):
+        return FileResponse(index_path)
+    return JSONResponse(status_code=404, content={"detail": "Not Found"})
+
+if os.path.exists(STATIC_DIR):
+    app.mount("/", StaticFiles(directory=STATIC_DIR, html=True), name="frontend")
