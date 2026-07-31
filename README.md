@@ -1,6 +1,7 @@
 # PariPari 🚀 - The Repo-Aware AI Copilot
 
 [![Built with Paritok](https://img.shields.io/badge/Built%20with-Paritok-1f2d3d)](https://github.com/Paritok-official/paritok-4b-v1)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-paripari.onrender.com-22c55e)](https://paripari.onrender.com/)
 
 PariPari is an intelligent, repository-aware AI Copilot designed to help you quickly understand codebases, track down bugs, and propose patches. 
 
